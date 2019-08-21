@@ -18,6 +18,7 @@ public class MemberVerifyService {
 	
 	private MemberSessionDao dao;
 
+	
 	public String verify(String uId, String code) {
 		
 		dao = template.getMapper(MemberSessionDao.class);
@@ -32,6 +33,8 @@ public class MemberVerifyService {
 		dao = template.getMapper(MemberSessionDao.class);
 		
 		MemberInfo member = dao.selectMemberById(uId);
+		
+		System.out.println("코드 : " + member.getCode());
 		
 		mailService.reSend(member.getuId(), member.getCode());
 	

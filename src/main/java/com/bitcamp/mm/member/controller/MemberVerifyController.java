@@ -24,7 +24,8 @@ public class MemberVerifyController {
 		return "member/verify"+rStr;
 	}
 
-	@RequestMapping("/member/verify/reMailSend")
+	@RequestMapping("member/verify/reMailSend")
+	@ResponseBody
 	public String reMailSend(@RequestParam("uId") String uId) {
 		
 		int rCnt = verifyService.reMailSend(uId);

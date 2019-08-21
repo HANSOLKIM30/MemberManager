@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 2019.08.21 verify 수정 -->
 	<update id="updateVerify">
-		update member set verify='Y' where uid=#{uId} and code=#{code}	
+		update member set verify='Y' where uid=#{param1} and code=#{param2}	
 	</update>
 	
 	<!-- 회원정보 수정 -->

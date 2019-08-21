@@ -75,7 +75,7 @@ public class MailSenderService {
 			
 			String htmlStr = "<h1>이메일 인증을 해주세요</h1>";
 			htmlStr += "<h3>인증을 위해 아래의 링크를 클릭해주세요</h3>";
-			htmlStr += "<h3><a href=\"http://localhost:8080/mm/member/verify?uId="+uId+"code="+code+"\">인증하기</a></h3>";
+			htmlStr += "<h3><a href=\"http://localhost:8080/mm/member/verify?uId="+uId+"&code="+code+"\">인증하기</a></h3>";
 			
 			message.setText(htmlStr, "UTF-8", "html");
 			message.addRecipient(RecipientType.TO, new InternetAddress(uId,"고객님","UTF-8"));
