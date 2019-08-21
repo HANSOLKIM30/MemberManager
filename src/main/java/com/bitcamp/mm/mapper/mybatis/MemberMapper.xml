@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitcamp.mm.member.dao.MemberSessionDao">
+	
+	<!-- select 결과 메핑을 위한 resultMap 설정 -->
+	<resultMap id="resultMemberInfo"
+		type="com.bitcamp.mm.member.domain.MemberInfo">
+		<id property="idx" column="idx" />
+		<result property="uId" column="uid" />
+		<result property="uPW" column="upw" />
+		<result property="uName" column="uname" />
+		<result property="uPhoto" column="uphoto" />
+		<result property="regDate" column="date" />
+		<result property="verify" column="verify" />
+		<result property="code" column="code" />
+	</resultMap>
+	
+	<!-- 회원가입  -->
+	<!-- 2018.08.21 code 컬럼 추가  -->
+	<insert id="insertMember"
+		parameterType="com.bitcamp.mm.member.domain.MemberInfo">
+
+		insert into member (uid, uname, upw, uphoto, code) values (#{uId}, #{uName}, #{uPW}, #{uPhoto}, #{code})
+
+	</insert>
+
+	<!-- 2019.08.21 verify 수정 -->
+	<update id="updateVerify">
+		update member set verify='Y' where uid=#{uId} and code=#{code}	
+	</update>
+	
+	<!-- 회원정보 수정 -->
+	<update id="updateMember"
+		parameterType="com.bitcamp.mm.member.domain.MemberInfo">
+
+		update member set uname=#{uName}, upw=#{uPW}, uphoto=#{uPhoto} where idx=#{idx}
+
+	</update>
+
+	<!-- 회원정보 삭제(탈퇴)  -->
+	<delete id="deleteMember">
+
+		DELETE FROM member WHERE uid = #{uId}
+
+	</delete>
+
+	<!-- 회원정보 삭제(탈퇴) 2  -->
+	<delete id="memberDeleteManager">
+	
+		delete from member where idx=#{idx}
+	
+	</delete>
+	
+	<!-- 회원 리스트의 개수   -->
+	<select id="selectTotalCount" resultType="int" parameterType="com.bitcamp.mm.member.domain.SearchParam">
+
+		select count(*) from member
+		
+		<where>
+			<choose>
+				<when test='stype!=null and stype.equals("both")'>
+					 uid like CONCAT('%',#{keyword},'%') or uname like CONCAT('%',#{keyword},'%')
+				</when>
+				
+				<when test='stype!=null and stype.equals("id")'>
+					uid like CONCAT('%',#{keyword},'%')
+				</when>
+				
+				<when test='stype!=null and stype.equals("name")'>
+					uname like CONCAT('%',#{keyword},'%')
+				</when>
+			</choose>
+		</where>
+	</select>
+
+	<!-- 회원 리스트 : 검색을 위해 동적쿼리 적용 -->
+	<select id="selectList" parameterType="map"
+		resultMap="resultMemberInfo">
+		
+		select * from member
+			
+		<where>
+			<if test="searchParam != null">
+				<choose>				
+					<when test="searchParam.stype == 'both'">
+						<include refid="whereId"/>
+						<include refid="whereName"/>
+					</when>
+					
+					<when test="searchParam.stype == 'id'">
+						<include refid="whereId"/>
+					</when>
+					
+					<when test="searchParam.stype == 'name'">
+						<include refid="whereName"/>
+					</when>
+				</choose>
+			</if>
+		</where>
+		
+		limit #{index}, #{MEMBER_CNT_LIST}
+	
+	</select>
+
+	<!-- sql문을 간단하게 만들기-id  -->
+	<sql id="whereId">
+			or uid like CONCAT('%',#{searchParam.keyword},'%')
+	</sql>
+	
+	<!-- sql문을 간단하게 만들기-name  -->
+	<sql id="whereName">
+			or uname like CONCAT('%',#{searchParam.keyword},'%')
+	</sql>
+	
+	<!-- 회원로그인  -->
+	<select id="selectMemberById" resultMap="resultMemberInfo">
+		
+		select * from member where uid = #{uId}
+	
+	</select>
+	
+	<!-- 회원정보 수정을 위한 정보 획득  -->
+	<select id="selectMemberByIdx" resultMap="resultMemberInfo">
+
+		select * from member where idx = #{idx}
+
+	</select>
+
+	<!-- 전체 회원 리스트 구하기  -->
+	<select id="selectAllList" resultMap="resultMemberInfo">
+		
+		select * from member order by uname
+		
+	</select>
+
+
+</mapper>
