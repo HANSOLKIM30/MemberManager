@@ -25,6 +25,8 @@ public interface MemberSessionDao {
 	public List<MemberInfo> selectList(Map<String, Object> params);
 	
 	public int updateVerify(String uId, String code);
+	
+	public int updatePW(String nPW, String uId);
 	//아래 메서드는 모두 selectList를 통해 동적쿼리로 처리
 	/*
 	 * public List<MemberInfo> selectListByBoth(Map<String, Object> params);

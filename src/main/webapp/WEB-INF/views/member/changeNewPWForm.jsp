@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +9,9 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <link href="<c:url value="/css/default.css"/>" rel="stylesheet" type="text/css">
-<style>
 
-</style>
 </head>
 <body>
-
 <!-- 해더 시작 -->
 <%@ include file="/WEB-INF/views/frame/header.jsp" %>
 <!-- 해더 끝 -->
@@ -24,25 +22,11 @@
 
 <!-- 컨텐츠 시작 -->
 <div id="contents">
-	<h3>로그인 페이지</h3>
-	<hr>
-	<form method="post">
-		<table>
-			<tr>
-				<td>아이디</td>
-				<td><input type="text" name="uId" required> </td>
-			</tr>
-			<tr>
-				<td>비밀번호</td>
-				<td><input type="password" name="uPW" required> </td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" value="로그인"> </td>
-			</tr>
-		</table>
+	<form>
+	가입하신 아이디를 입력하세요 
+	<input type="text" id="uId" name="uId"> 
+	<input type="submit" id="forgotPW">
 	</form>
-	<a href="changeNewPWForm">비밀번호를 잊으셨나요?</a> 
 </div>
 <!-- 컨텐츠 끝 -->
 
@@ -51,5 +35,26 @@
 <%@ include file="/WEB-INF/views/frame/footer.jsp" %>
 <!-- 푸터 끝 -->
 
+<script>
+	$(document).ready(function(){
+		$('#forgotPW').click(function(){
+			
+			$.ajax({
+				url : 'changeNewPW',
+				type : 'POST',
+				data : {uId : $("#uId").val()},
+				success : function(data){
+					if(data=="success"){
+						alert("가입하신 이메일로 비밀번호가 전송되었습니다.");
+					}
+				}
+			});
+			
+			return false;
+		});
+	});
+
+
+</script>
 </body>
 </html>

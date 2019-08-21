@@ -181,15 +181,15 @@
 			<version>1.3.0</version>
 		</dependency>
 
-	    <!-- Json 처리를 위한 라이브러리  -->
+		<!-- Json 처리를 위한 라이브러리 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.8</version>
 		</dependency>
 
-		<!-- 메일 설정 시작 --> 
-		<!-- =================================================== --> 
+		<!-- 메일 설정 시작 -->
+		<!-- =================================================== -->
 		<!-- javax.mail/mail -->
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -200,9 +200,8 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 			<version>${org.springframework-version}</version>
-		</dependency> 
-		<!-- ================================================== -->
-		
+		</dependency>
+
 	</dependencies>
 
 	<build>

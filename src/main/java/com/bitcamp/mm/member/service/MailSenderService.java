@@ -92,4 +92,31 @@ public class MailSenderService {
 		}
 		
 	}
+	
+	//새로운 패스워드 송부
+	public void sendTempPw(String tempPW, String uId) {
+		MimeMessage message = sender.createMimeMessage();
+		
+		try {
+			message.setSubject("[안내] 임시비밀번호 발급", "UTF-8");
+			
+			String htmlStr = "<h1>임시비밀번호 발급 안내</h1>";
+			htmlStr += "<h3>임시비밀번호</h3>";
+			htmlStr += "<h3>"+ tempPW +"</h3>";
+			
+			message.setText(htmlStr, "UTF-8", "html");
+			message.addRecipient(RecipientType.TO, new InternetAddress(uId, "고객님", "UTF-8"));
+		
+			sender.send(message);
+			
+		} catch (MessagingException e) {
+		
+			e.printStackTrace();
+			
+		} catch (UnsupportedEncodingException e) {
+			
+			e.printStackTrace();
+		}
+		
+	}
 }

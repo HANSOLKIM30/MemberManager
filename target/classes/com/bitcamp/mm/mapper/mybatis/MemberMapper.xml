@@ -33,6 +33,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update member set verify='Y' where uid=#{param1} and code=#{param2}	
 	</update>
 	
+	<!-- 2019.08.21 비밀번호 수정 -->
+	<update id="updatePW">
+		update member set upw=#{param1} where uid=#{param2}
+	</update>
+	
 	<!-- 회원정보 수정 -->
 	<update id="updateMember"
 		parameterType="com.bitcamp.mm.member.domain.MemberInfo">
